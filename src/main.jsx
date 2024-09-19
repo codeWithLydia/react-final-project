@@ -1,35 +1,48 @@
-import { ChakraProvider } from '@chakra-ui/react';
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { EventPage } from './pages/EventPage';
-import { EventsPage } from './pages/EventsPage';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Root } from './components/Root';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { ChakraProvider } from "@chakra-ui/react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { DataProvider } from "./context/DataContext";
+import { Home } from "./pages/Home";
+import { EventPage } from "./pages/EventPage";
+import { EventsPage } from "./pages/EventsPage";
+import { Contact } from "./pages/Contact";
+import { Root } from "./components/Root";
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <Root />,
     children: [
       {
-        path: '/',
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/eventslist",
         element: <EventsPage />,
         // loader: postListLoader,
       },
       {
-        path: '/event/:eventId',
+        path: "/event/:eventId",
         element: <EventPage />,
         // loader: postLoader,
         // action: addComment,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
       },
     ],
   },
 ]);
 // @ts-ignore
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ChakraProvider>
-      <RouterProvider router={router} />
+      <DataProvider>
+        <RouterProvider router={router} />
+      </DataProvider>
     </ChakraProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );
