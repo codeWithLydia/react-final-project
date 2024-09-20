@@ -1,29 +1,45 @@
-/*
-import React from "react";
-import { useState } from "react";
-import data
+import React, { useState, useContext } from "react";
+import { DataContext } from "../context/DataContext";
 import { TextInputSearch } from "../components/ui/TextInputSearch";
+import { Link } from "react-router-dom";
 
-export const EventSearch =({}) => {
-    const [searchField, setSearchField] = useState("");
+export const EventSearch = () => {
+  const { data } = useContext(DataContext);
+  const [searchField, setSearchField] = useState("");
+  const [results, setResults] = useState([]);
 
-    const handleChange = (event) => {
-    setSearchField(event.target.value);
+  const handleChange = (event) => {
+    const searchValue = event.target.value.toLowerCase();
+    setSearchField(searchValue);
 
-    const matchedEvents = data.filter(({ event }) => {
-        return titel event
-        .toLowerCase().includes(event.target.value.toLowerCase());
-        });
+    if (searchValue === "") {
+      setResults([]);
+    } else {
+      const matchedEvents = data.events.filter(({ title }) => {
+        return title.toLowerCase().includes(searchValue);
+      });
 
-        setResults(matchedEvents);
-};
+      setResults(matchedEvents);
+    }
+  };
 
-    return (
+  return (
     <>
-    <label>Search for events: </label>
-    <TextInputSearch value={searchField} changeFn={handleChange} w={200} mb={8} bgColor="#071c29" />
+      <label>Search for events: </label>
+      <TextInputSearch
+        value={searchField}
+        changeFn={handleChange}
+        w={200}
+        mb={8}
+        bgColor="fff89a"
+      />
+      <ul>
+        {results.map((event) => (
+          <li key={event.id}>
+            <Link to={`/event/${event.id}`}>{event.title}</Link>
+          </li>
+        ))}
+      </ul>
     </>
-    
-    );
-    };
-    */
+  );
+};

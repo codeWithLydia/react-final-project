@@ -19,7 +19,7 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/eventslist",
+        path: "/eventsPage",
         element: <EventsPage />,
         // loader: postListLoader,
       },

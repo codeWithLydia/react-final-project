@@ -8,17 +8,12 @@ export const Navigation = () => {
       <ul>
         <li>
           <Button colorScheme="yellow">
-            <Link to="/home">Home</Link>
+            <Link to="/">Home</Link>
           </Button>
         </li>
         <li>
           <Button colorScheme="yellow">
-            <Link to="/">Events</Link>
-          </Button>
-        </li>
-        <li>
-          <Button colorScheme="yellow">
-            <Link to="/event/1">Event</Link>
+            <Link to="/eventspage">Events</Link>
           </Button>
         </li>
         <li>
