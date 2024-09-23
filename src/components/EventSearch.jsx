@@ -1,26 +1,20 @@
 import React, { useState, useContext } from "react";
 import { DataContext } from "../context/DataContext";
 import { TextInputSearch } from "../components/ui/TextInputSearch";
-import { Link } from "react-router-dom";
 
-export const EventSearch = () => {
+export const EventSearch = ({ setResults }) => {
   const { data } = useContext(DataContext);
   const [searchField, setSearchField] = useState("");
-  const [results, setResults] = useState([]);
 
   const handleChange = (event) => {
-    const searchValue = event.target.value.toLowerCase();
-    setSearchField(searchValue);
+    setSearchField(event.target.value);
 
-    if (searchValue === "") {
-      setResults([]);
-    } else {
-      const matchedEvents = data.events.filter(({ title }) => {
-        return title.toLowerCase().includes(searchValue);
-      });
+    const matchedEvents = data.events.filter(({ title }) => {
+      return title.toLowerCase().includes(event.target.value.toLowerCase());
+    });
+    console.log("matched events:", matchedEvents);
 
-      setResults(matchedEvents);
-    }
+    setResults(matchedEvents);
   };
 
   return (
@@ -33,13 +27,6 @@ export const EventSearch = () => {
         mb={8}
         bgColor="fff89a"
       />
-      <ul>
-        {results.map((event) => (
-          <li key={event.id}>
-            <Link to={`/event/${event.id}`}>{event.title}</Link>
-          </li>
-        ))}
-      </ul>
     </>
   );
 };

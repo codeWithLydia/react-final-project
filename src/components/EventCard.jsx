@@ -1,5 +1,4 @@
 import React from "react";
-
 import {
   Card,
   CardHeader,
@@ -12,8 +11,12 @@ import {
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
-export const EventCard = ({ event }) => {
+export const EventCard = ({ event, categories }) => {
   const navigate = useNavigate();
+
+  const eventCategories = categories.filter((category) =>
+    event.categoryIds.includes(category.id)
+  );
 
   const handleCardClick = () => {
     navigate(`/event/${event.id}`);
@@ -24,10 +27,10 @@ export const EventCard = ({ event }) => {
       <CardHeader>
         <Heading>{event.title}</Heading>
         <Text>
-          {event.categories.map((category, index) => (
+          {eventCategories.map((category, index) => (
             <React.Fragment key={category.id}>
               {category.name}
-              {index < event.categories.length - 1 ? ", " : ""} {}
+              {index < eventCategories.length - 1 && ", "}
             </React.Fragment>
           ))}
         </Text>

@@ -1,14 +1,14 @@
 import React from "react";
 import { Flex, Text, Show } from "@chakra-ui/react";
-import { HamburgerIcon } from "@chakra-ui/icons";
 import { Navigation } from "./Navigation";
+import { HamburgerNavigation } from "./ui/HamburgerNavigation";
 
 export const Header = () => {
   return (
     <Flex bgColor="blue.300" justifyContent="space-between">
-      <Text>Jane's EventList</Text>
+      <Text>Jane&apos;s EventList</Text>
       <Show below="md">
-        <HamburgerIcon />
+        <HamburgerNavigation />
       </Show>
       <Show above="md">
         <Navigation />

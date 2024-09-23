@@ -1,8 +1,7 @@
 import React, { useContext } from "react";
 import { useParams } from "react-router-dom";
 import { DataContext } from "../context/DataContext";
-import { Heading, Text, Image, Flex } from "@chakra-ui/react";
-import { Button } from "../components/ui/Button";
+import { Heading, Text, Image, Flex, Button } from "@chakra-ui/react";
 
 export const EventPage = () => {
   const { eventId } = useParams();

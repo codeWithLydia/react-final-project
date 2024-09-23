@@ -1,29 +1,22 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { DataContext } from "../context/DataContext";
 
-export const CategoryFilter = ({ onFilterChange }) => {
+export const CategoryFilter = ({ setResults }) => {
   const { data } = useContext(DataContext);
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [categories, setCategories] = useState([]);
 
-  useEffect(() => {
-    if (data.categories && data.categories.length > 0) {
-      setCategories(data.categories);
-    }
-  }, [data.categories]);
-
-  const handleChange = (event) => {
-    const value = event.target.value;
-    setSelectedCategory(value);
-    onFilterChange(value);
+  const handleCategoryChange = (categoryId) => {
+    const filteredEvents = data.events.filter((event) =>
+      event.categoryIds.includes(parseInt(categoryId))
+    );
+    setResults(filteredEvents);
   };
 
   return (
     <>
       <label>Select Category: </label>
-      <select onChange={handleChange} value={selectedCategory}>
+      <select onChange={(e) => handleCategoryChange(e.target.value)}>
         <option value="">All categories</option>
-        {categories.map((category) => (
+        {data.categories.map((category) => (
           <option key={category.id} value={category.id}>
             {category.name}
           </option>
