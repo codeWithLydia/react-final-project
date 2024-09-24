@@ -1,11 +1,14 @@
 import React, { useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { DataContext } from "../context/DataContext";
-import { Heading, Text, Image, Flex, Button } from "@chakra-ui/react";
+import { Heading, Text, Image, Flex } from "@chakra-ui/react";
+import { DeleteButton } from "../components/ui/DeleteButton";
+import { EditEventButton } from "../components/ui/EditEventButton";
 
 export const EventPage = () => {
   const { eventId } = useParams();
   const { data, loading, error } = useContext(DataContext);
+  const navigate = useNavigate();
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>There seems to be a problem</p>;
@@ -22,6 +25,14 @@ export const EventPage = () => {
   });
 
   const createdByUser = data.users.find((user) => user.id === event.createdBy);
+
+  const handleEventDeleted = () => {
+    navigate("/events");
+  };
+
+  const handleSave = (newValues) => {
+    console.log("Event details updated:", newValues);
+  };
 
   return (
     <Flex>
@@ -58,8 +69,17 @@ export const EventPage = () => {
         </Text>
       </Flex>
       <Flex>
-        <Button colorScheme="blue">Edit event</Button>
-        <Button colorScheme="blue">Delete event</Button>
+        <EditEventButton
+          defaultValues={{
+            title: event.title,
+            description: event.description,
+            startTime: new Date(event.startTime).toISOString().slice(0, 16),
+            endTime: new Date(event.endTime).toISOString().slice(0, 16),
+          }}
+          onSave={handleSave}
+        />
+
+        <DeleteButton eventId={event.id} onDelete={handleEventDeleted} />
       </Flex>
     </Flex>
   );

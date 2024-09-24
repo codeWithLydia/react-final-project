@@ -8,7 +8,7 @@ import { EventPage } from "./pages/EventPage";
 import { EventsPage } from "./pages/EventsPage";
 import { Contact } from "./pages/Contact";
 import { Root } from "./components/Root";
-import { EventSubmitForm } from "./components/EventSubmitForm";
+import { EventSubmitForm } from "./pages/EventSubmitForm";
 
 const router = createBrowserRouter([
   {
