@@ -1,14 +1,29 @@
 import React, { useContext } from "react";
 import { DataContext } from "../context/DataContext";
 
-export const CategoryFilter = ({ setResults }) => {
+export const CategoryFilter = ({ setResults, searchResults, onOpenModal }) => {
   const { data } = useContext(DataContext);
 
   const handleCategoryChange = (categoryId) => {
-    const filteredEvents = data.events.filter((event) =>
-      event.categoryIds.includes(parseInt(categoryId))
-    );
+    const eventsToFilter =
+      Array.isArray(searchResults) && searchResults.length > 0
+        ? searchResults
+        : data.events;
+
+    console.log("events to filter:", eventsToFilter);
+    console.log("selected category id:", categoryId);
+
+    const filteredEvents = eventsToFilter.filter((event) => {
+      if (categoryId === "") return true;
+      return event.categoryIds.includes(parseInt(categoryId));
+    });
+
+    console.log("filtered events:", filteredEvents);
     setResults(filteredEvents);
+
+    if (filteredEvents.length > 0) {
+      onOpenModal();
+    }
   };
 
   return (

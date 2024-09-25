@@ -2,16 +2,19 @@ import { Stack, Input, Checkbox, Button, Flex } from "@chakra-ui/react";
 import { useState } from "react";
 
 export const EventSubmitForm = () => {
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     createdBy: 1,
     title: "",
-    desciption: "",
+    description: "",
     image: "",
     categoryIds: [],
     location: "",
     startTime: "",
     endTime: "",
-  });
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,7 +29,7 @@ export const EventSubmitForm = () => {
     if (e.target.checked) {
       setFormData({
         ...formData,
-        categoryIds: [...formData.categoyIds, value],
+        categoryIds: [...formData.categoryIds, value],
       });
     } else {
       setFormData({
@@ -38,9 +41,10 @@ export const EventSubmitForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     try {
-      const response = await fetch("http://localhost3000/events", {
+      const response = await fetch("http://localhost:3000/events", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -54,8 +58,12 @@ export const EventSubmitForm = () => {
 
       const newEvent = await response.json();
       console.log("Event created succesfully: ", newEvent);
+      setFormData(initialFormData);
+      alert("event is succesfully added to our list");
     } catch (error) {
       console.error("Error submitting event:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -127,7 +135,7 @@ export const EventSubmitForm = () => {
         </Stack>
         <Button
           type="submit"
-          isLoading={false}
+          isLoading={isLoading}
           loadingText="Submitting"
           variant="outline"
         >

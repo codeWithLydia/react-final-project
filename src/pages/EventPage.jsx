@@ -27,7 +27,7 @@ export const EventPage = () => {
   const createdByUser = data.users.find((user) => user.id === event.createdBy);
 
   const handleEventDeleted = () => {
-    navigate("/events");
+    navigate("/eventsPage");
   };
 
   const handleSave = (newValues) => {
@@ -76,6 +76,7 @@ export const EventPage = () => {
             startTime: new Date(event.startTime).toISOString().slice(0, 16),
             endTime: new Date(event.endTime).toISOString().slice(0, 16),
           }}
+          eventId={event.id}
           onSave={handleSave}
         />
 

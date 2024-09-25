@@ -21,18 +21,14 @@ import {
 } from "@chakra-ui/react";
 import { CheckIcon, CloseIcon, EditIcon } from "@chakra-ui/icons";
 
-export const EditEventButton = ({
-  defaultValues,
-  onSave,
-  apiEndpoint,
-  eventId,
-}) => {
+export const EditEventButton = ({ defaultValues, onSave, eventId }) => {
   const [localValues, setLocalValues] = useState(defaultValues);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleSave = async () => {
+    console.log("ending PUT request to update event: ", eventId);
     try {
-      const response = await fetch(`${apiEndpoint}/${eventId}`, {
+      const response = await fetch(`http://localhost:3000/events/${eventId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -41,6 +37,8 @@ export const EditEventButton = ({
       });
 
       if (!response.ok) {
+        const errorText = await response.text();
+        console.error("error details:", errorText);
         throw new Error("Network response was not ok");
       }
 
