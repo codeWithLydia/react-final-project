@@ -5,7 +5,7 @@ import { HamburgerNavigation } from "./ui/HamburgerNavigation";
 
 export const Header = () => {
   return (
-    <Flex bgColor="blue.300" justifyContent="space-between">
+    <Flex className="header">
       <Text>Jane&apos;s EventList</Text>
       <Show below="md">
         <HamburgerNavigation />

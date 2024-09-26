@@ -3,7 +3,7 @@ import { Flex, Text } from "@chakra-ui/react";
 
 export const Footer = () => {
   return (
-    <Flex bgColor="blue.300">
+    <Flex className="footer">
       <Text>©2024 Jane Doe</Text>
     </Flex>
   );

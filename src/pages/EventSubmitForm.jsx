@@ -1,5 +1,14 @@
-import { Stack, Input, Checkbox, Button, Flex } from "@chakra-ui/react";
+import {
+  Stack,
+  Input,
+  Checkbox,
+  Button,
+  Flex,
+  Alert,
+  AlertIcon,
+} from "@chakra-ui/react";
 import { useState } from "react";
+import { SuccessMessage } from "../components/ui/SuccessMessage";
 
 export const EventSubmitForm = () => {
   const initialFormData = {
@@ -15,6 +24,8 @@ export const EventSubmitForm = () => {
 
   const [formData, setFormData] = useState(initialFormData);
   const [isLoading, setIsLoading] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,6 +54,14 @@ export const EventSubmitForm = () => {
     e.preventDefault();
     setIsLoading(true);
 
+    if (formData.categoryIds.length === 0) {
+      setErrorMessage("You need to pick a category for your event");
+      setIsLoading(false);
+      return;
+    } else {
+      setErrorMessage("");
+    }
+
     try {
       const response = await fetch("http://localhost:3000/events", {
         method: "POST",
@@ -59,7 +78,7 @@ export const EventSubmitForm = () => {
       const newEvent = await response.json();
       console.log("Event created succesfully: ", newEvent);
       setFormData(initialFormData);
-      alert("event is succesfully added to our list");
+      setShowSuccess(true);
     } catch (error) {
       console.error("Error submitting event:", error);
     } finally {
@@ -69,6 +88,12 @@ export const EventSubmitForm = () => {
 
   return (
     <Flex bgColor="blue.600">
+      <SuccessMessage
+        message="Event successfully created"
+        showSuccessMessage={showSuccess}
+        setShowSuccessMessage={setShowSuccess}
+        duration={5000}
+      />
       <form onSubmit={handleSubmit}>
         <Stack spacing={3}>
           <Input
@@ -97,6 +122,12 @@ export const EventSubmitForm = () => {
               Relaxation
             </Checkbox>
           </Stack>
+          {errorMessage && (
+            <Alert status="error">
+              <AlertIcon />
+              {errorMessage}
+            </Alert>
+          )}
 
           <Input
             placeholder="Desription Event"

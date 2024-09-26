@@ -21,7 +21,7 @@ import {
 } from "@chakra-ui/react";
 import { CheckIcon, CloseIcon, EditIcon } from "@chakra-ui/icons";
 
-export const EditEventButton = ({ defaultValues, onSave, eventId }) => {
+export const EditEventButton = ({ defaultValues, onSave, onFail, eventId }) => {
   const [localValues, setLocalValues] = useState(defaultValues);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -47,6 +47,7 @@ export const EditEventButton = ({ defaultValues, onSave, eventId }) => {
       onClose();
     } catch (error) {
       console.error("Something went wrong:", error);
+      onFail();
     }
   };
 
@@ -74,12 +75,6 @@ export const EditEventButton = ({ defaultValues, onSave, eventId }) => {
     <Box>
       {/* Preview mode shows the content and the Edit button */}
       <Box textAlign="center">
-        {/*<Box>
-          <h2>{localValues.title}</h2>
-          <p>{localValues.description}</p>
-          <p>Start Time: {new Date(localValues.startTime).toLocaleString()}</p>
-          <p>End Time: {new Date(localValues.endTime).toLocaleString()}</p>
-        </Box>*/}
         <IconButton
           size="sm"
           icon={<EditIcon />}

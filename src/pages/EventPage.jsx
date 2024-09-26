@@ -1,14 +1,19 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { DataContext } from "../context/DataContext";
 import { Heading, Text, Image, Flex } from "@chakra-ui/react";
 import { DeleteButton } from "../components/ui/DeleteButton";
 import { EditEventButton } from "../components/ui/EditEventButton";
+import { SuccessMessage } from "../components/ui/SuccessMessage";
+import { FailMessage } from "../components/ui/FailMessage";
 
 export const EventPage = () => {
   const { eventId } = useParams();
   const { data, loading, error } = useContext(DataContext);
   const navigate = useNavigate();
+
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showFail, setShowFail] = useState(false);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>There seems to be a problem</p>;
@@ -32,10 +37,27 @@ export const EventPage = () => {
 
   const handleSave = (newValues) => {
     console.log("Event details updated:", newValues);
+    setShowSuccess(true);
+  };
+
+  const handleFail = () => {
+    setShowFail(true);
   };
 
   return (
     <Flex>
+      <SuccessMessage
+        message="Event updated successfully"
+        showSuccess={showSuccess}
+        setShowSuccess={setShowSuccess}
+        duration={5000}
+      />
+      <FailMessage
+        message="Failed to update the event. Please try again"
+        showFail={showFail}
+        setShowFail={setShowFail}
+        duration={5000}
+      />
       <Heading>{event.title}</Heading>
       <Text>
         Categories:{" "}
@@ -78,6 +100,7 @@ export const EventPage = () => {
           }}
           eventId={event.id}
           onSave={handleSave}
+          onFail={handleFail}
         />
 
         <DeleteButton eventId={event.id} onDelete={handleEventDeleted} />
