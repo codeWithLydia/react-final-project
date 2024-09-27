@@ -8,22 +8,17 @@
 
   font-size: 16px;
   line-height: 24px;
-  font-weight: 400;
+  font-weight: 300;
 
   color-scheme: light dark;
+  color: var(--accent-color);
+  background-color: #8b9499;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-}
-
-.title {
-  text-align: center;
-  font-family: var(--secondary-font);
-  font-size: 2rem;
-  color: var(--accent-color);
 }
 
 .menu-link {
@@ -36,10 +31,13 @@
   width: 100%vw;
   justify-content: space-between;
   background-color: var(--primary-color);
-  color: var(--secondary-color);
+  padding: 1rem;
+}
+
+.header .header-text {
   font-family: var(--secondary-font);
   font-size: 2rem;
-  padding: 0.5rem;
+  color: var(--secondary-color);
 }
 
 .footer {
@@ -64,23 +62,23 @@
   background-size: cover;
 }
 
-.home-page > .title {
-  text-align: center;
+.home-page .title {
   font-family: var(--secondary-font);
   font-size: 2rem;
   color: var(--accent-color);
 }
 
-.home-page > .welcome-text {
+.welcome-text {
   width: 50%;
   height: auto;
   background-color: var(--primary-color);
-  color: var(--accent-color);
-  font-size: 1rem;
-  font-family: var(--main-font);
   border-radius: 1rem;
   margin-top: 0.5rem;
   padding: 0.5rem;
+  color: var(--accent-color);
+  font-family: var(--main-font);
+  font-size: 1rem;
+  text-align: center;
 }
 
 .contact-page {
@@ -96,17 +94,76 @@
   background-size: cover;
 }
 
-.contact-page > .contact-info {
+.contact-page .title {
+  text-align: center;
+  font-family: var(--secondary-font);
+  font-size: 3rem;
+  color: var(--accent-color);
+}
+
+.contact-info {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   width: auto;
   height: auto;
+  border-radius: 1rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
   background-color: var(--primary-color);
   color: var(--accent-color);
   font-family: var(--main-font);
   font-size: 1rem;
+}
+
+.events-page {
+  width: 100vw;
+  height: auto;
+  background-color: #8b9499;
+  background-image: linear-gradient(to top right, #fff89a, #ffc900);
+}
+
+.search-label {
+  font-family: var(--main-font);
+  font-size: 1rem;
+  color: var(--primary-color);
+}
+
+.search-modal {
+  width: 75%;
+  height: auto;
   border-radius: 1rem;
-  margin-top: 0.5rem;
+  margin: 0.5rem;
   padding: 0.5rem;
+  background-color: #f0f0f0;
+  text-align: center;
+  font-family: var(--main-font);
+  font-size: 1rem;
+  color: var(--primary-color);
+}
+
+.modal-list {
+  list-style-type: none;
+}
+
+.add-event-form {
+  margin: 1rem;
+}
+
+.event-page {
+  width: 100vw;
+  height: 100vh;
+  background-color: #8b9499;
+  background-image: linear-gradient(to top right, #fff89a, #ffc900);
+}
+
+.nav-list {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+}
+
+.nav-link {
+  font-family: var(--main-font);
+  font-size: 1rem;
 }

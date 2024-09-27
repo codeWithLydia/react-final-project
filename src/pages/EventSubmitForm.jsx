@@ -7,8 +7,7 @@ import {
   Alert,
   AlertIcon,
 } from "@chakra-ui/react";
-import { useState } from "react";
-import { SuccessMessage } from "../components/ui/SuccessMessage";
+import { useEffect, useState } from "react";
 
 export const EventSubmitForm = () => {
   const initialFormData = {
@@ -86,22 +85,52 @@ export const EventSubmitForm = () => {
     }
   };
 
+  useEffect(() => {
+    if (showSuccess) {
+      const timer = setTimeout(() => {
+        setShowSuccess(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [showSuccess]);
+
+  useEffect(() => {
+    if (errorMessage) {
+      const timer = setTimeout(() => {
+        setErrorMessage("");
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [errorMessage]);
+
   return (
-    <Flex bgColor="blue.600">
-      <SuccessMessage
-        message="Event successfully created"
-        showSuccessMessage={showSuccess}
-        setShowSuccessMessage={setShowSuccess}
-        duration={5000}
-      />
-      <form onSubmit={handleSubmit}>
+    <Flex bgColor="yellow.100" width="100vw" height="100vh">
+      <form className="add-event-form" onSubmit={handleSubmit}>
         <Stack spacing={3}>
+          {/* Success Alert */}
+          {showSuccess && (
+            <Alert status="success" variant="solid">
+              <AlertIcon />
+              Event has been succesfully added to our list!
+            </Alert>
+          )}
+
+          {/* Error Alert */}
+          {errorMessage && (
+            <Alert status="error">
+              <AlertIcon />
+              {errorMessage}
+            </Alert>
+          )}
           <Input
             placeholder="Title Event"
             name="title"
             value={formData.title}
             onChange={handleChange}
             size="md"
+            bgColor="#f0f0f0"
+            focusBorderColor="#071c29"
+            _placeholder={{ opacity: 1, color: "#071c29" }}
             required
           />
           <Input
@@ -110,6 +139,9 @@ export const EventSubmitForm = () => {
             value={formData.image}
             onChange={handleChange}
             size="md"
+            bgColor="#f0f0f0"
+            focusBorderColor="#071c29"
+            _placeholder={{ opacity: 1, color: "#071c29" }}
           />
           <Stack spacing={3} direction="row">
             <Checkbox value="1" onChange={handleCategoryChange}>
@@ -135,6 +167,9 @@ export const EventSubmitForm = () => {
             value={formData.description}
             onChange={handleChange}
             size="md"
+            bgColor="#f0f0f0"
+            focusBorderColor="#071c29"
+            _placeholder={{ opacity: 1, color: "#071c29" }}
             required
           />
           <Input
@@ -143,6 +178,9 @@ export const EventSubmitForm = () => {
             value={formData.location}
             onChange={handleChange}
             size="md"
+            bgColor="#f0f0f0"
+            focusBorderColor="#071c29"
+            _placeholder={{ opacity: 1, color: "#071c29" }}
             required
           />
           <Input
@@ -152,6 +190,9 @@ export const EventSubmitForm = () => {
             onChange={handleChange}
             size="md"
             type="datetime-local"
+            bgColor="#f0f0f0"
+            focusBorderColor="#071c29"
+            _placeholder={{ opacity: 1, color: "#071c29" }}
             required
           />
           <Input
@@ -161,6 +202,9 @@ export const EventSubmitForm = () => {
             onChange={handleChange}
             size="md"
             type="datetime-local"
+            bgColor="#f0f0f0"
+            focusBorderColor="#071c29"
+            _placeholder={{ opacity: 1, color: "#071c29" }}
             required
           />
         </Stack>
@@ -168,7 +212,8 @@ export const EventSubmitForm = () => {
           type="submit"
           isLoading={isLoading}
           loadingText="Submitting"
-          variant="outline"
+          colorScheme="teal"
+          marginTop="0.5rem"
         >
           Submit
         </Button>

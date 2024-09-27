@@ -23,10 +23,30 @@ export const EventCard = ({ event, categories }) => {
   };
 
   return (
-    <Card className="event-card" onClick={handleCardClick}>
+    <Card
+      onClick={handleCardClick}
+      bg="#071c29"
+      width="500px"
+      height="auto"
+      borderRadius="1rem"
+      variant="elevated"
+      margin="1rem"
+    >
       <CardHeader>
-        <Heading>{event.title}</Heading>
-        <Text>
+        <Heading
+          fontFamily="'Verdana', 'Tahoma', sans-serif"
+          color="#f0f0f0"
+          fontWeight="200"
+          fontSize="2rem"
+        >
+          {event.title}
+        </Heading>
+        <Text
+          fontFamily="'Verdana', 'Tahoma', sans-serif"
+          color="#f0f0f0"
+          fontWeight="200"
+          fontSize="1rem"
+        >
           {eventCategories.map((category, index) => (
             <React.Fragment key={category.id}>
               {category.name}
@@ -45,11 +65,39 @@ export const EventCard = ({ event, categories }) => {
         />
         <Stack mt="3" spacing="3">
           <Flex>
-            <Text>StartTime: {new Date(event.startTime).toLocaleString()}</Text>
-            <Text>EndTime: {new Date(event.endTime).toLocaleString()}</Text>
+            <Text
+              fontFamily="'Verdana', 'Tahoma', sans-serif"
+              color="#f0f0f0"
+              fontWeight="200"
+              fontSize="1rem"
+            >
+              StartTime: {new Date(event.startTime).toLocaleString()}
+            </Text>
+            <Text
+              fontFamily="'Verdana', 'Tahoma', sans-serif"
+              color="#f0f0f0"
+              fontWeight="200"
+              fontSize="1rem"
+            >
+              EndTime: {new Date(event.endTime).toLocaleString()}
+            </Text>
           </Flex>
-          <Text>Desription</Text>
-          <Text>{event.description}</Text>
+          <Text
+            fontFamily="'Verdana', 'Tahoma', sans-serif"
+            color="#f0f0f0"
+            fontWeight="200"
+            fontSize="1.5rem"
+          >
+            Desription
+          </Text>
+          <Text
+            fontFamily="'Verdana', 'Tahoma', sans-serif"
+            color="#f0f0f0"
+            fontWeight="200"
+            fontSize="1rem"
+          >
+            {event.description}
+          </Text>
         </Stack>
       </CardBody>
     </Card>

@@ -16,9 +16,6 @@ export const DataProvider = ({ children }) => {
           fetch("http://localhost:3000/users"),
           fetch("http://localhost:3000/categories"),
         ]);
-      console.log("events response status:", eventsResponse.status);
-      console.log("users response status:", usersResponse.status);
-      console.log("categories response status", categoriesResponse.status);
 
       if (!eventsResponse.ok || !usersResponse.ok || !categoriesResponse.ok) {
         throw new Error("Network response was not ok");
@@ -28,7 +25,6 @@ export const DataProvider = ({ children }) => {
         usersResponse.json(),
         categoriesResponse.json(),
       ]);
-      console.log({ events, users, categories });
 
       setData({ events, users, categories });
     } catch (err) {

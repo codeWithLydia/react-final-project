@@ -13,8 +13,8 @@ export const HamburgerNavigation = () => {
         borderRadius="md"
         borderWidth="1px"
         bg="#f0f0f0"
-        _hover={{ bg: "gray.400" }}
-        _expanded={{ bg: "blue.200" }}
+        _hover={{ bg: "#8b9499" }}
+        _expanded={{ bg: "#ffc900" }}
         _focus={{ boxShadow: "outline" }}
       >
         <HamburgerIcon />

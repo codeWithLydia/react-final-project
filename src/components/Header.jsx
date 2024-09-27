@@ -6,7 +6,7 @@ import { HamburgerNavigation } from "./ui/HamburgerNavigation";
 export const Header = () => {
   return (
     <Flex className="header">
-      <Text>Jane&apos;s EventList</Text>
+      <Text className="header-text">Jane&apos;s EventList</Text>
       <Show below="md">
         <HamburgerNavigation />
       </Show>

@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { DataContext } from "../context/DataContext";
 import { TextInputSearch } from "../components/ui/TextInputSearch";
 import { SearchResultModal } from "./ui/SearchResultModal";
+import { Flex } from "@chakra-ui/react";
 
 export const EventSearch = ({ setResults }) => {
   const { data } = useContext(DataContext);
@@ -23,9 +24,6 @@ export const EventSearch = ({ setResults }) => {
     const matchedEvents = data.events.filter(({ title }) => {
       return title.toLowerCase().includes(event.target.value.toLowerCase());
     });
-    console.log("matched events:", matchedEvents);
-    console.log("searchfield:", value);
-    console.log("resultlength", matchedEvents.length);
 
     setSearchResults(matchedEvents);
     setResults(matchedEvents);
@@ -49,14 +47,15 @@ export const EventSearch = ({ setResults }) => {
 
   return (
     <>
-      <label>Search for events: </label>
-      <TextInputSearch
-        value={searchField}
-        changeFn={handleChange}
-        w={200}
-        mb={8}
-        bgColor="fff89a"
-      />
+      <Flex flexDir="row" alignItems="center">
+        <label className="search-label">Search for events: </label>
+        <TextInputSearch
+          value={searchField}
+          changeFn={handleChange}
+          w={250}
+          m="0.5rem"
+        />
+      </Flex>
       <SearchResultModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}

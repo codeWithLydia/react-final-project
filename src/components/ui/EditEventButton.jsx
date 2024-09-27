@@ -76,11 +76,12 @@ export const EditEventButton = ({ defaultValues, onSave, onFail, eventId }) => {
       {/* Preview mode shows the content and the Edit button */}
       <Box textAlign="center">
         <IconButton
-          size="sm"
+          size="md"
           icon={<EditIcon />}
-          mt={4}
+          colorScheme="teal"
           onClick={onOpen}
           aria-label="Edit Event"
+          mx="1rem"
         />
       </Box>
 
@@ -88,7 +89,14 @@ export const EditEventButton = ({ defaultValues, onSave, onFail, eventId }) => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Edit Event</ModalHeader>
+          <ModalHeader
+            fontSize="1.5rem"
+            fontFamily="'Verdana', 'Tahoma', sans-serif"
+            fontWeight="300"
+            color="#071c29"
+          >
+            Edit Event
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Flex direction="column" gap={4}>
@@ -96,7 +104,9 @@ export const EditEventButton = ({ defaultValues, onSave, onFail, eventId }) => {
               <Editable
                 textAlign="center"
                 defaultValue={localValues.title}
-                fontSize="lg"
+                fontSize="1rem"
+                fontFamily="'Verdana', 'Tahoma', sans-serif"
+                color="#071c29"
                 isPreviewFocusable={false}
                 onChange={(value) =>
                   setLocalValues({ ...localValues, title: value })
@@ -110,7 +120,9 @@ export const EditEventButton = ({ defaultValues, onSave, onFail, eventId }) => {
               <Editable
                 textAlign="center"
                 defaultValue={localValues.description}
-                fontSize="lg"
+                fontSize="1rem"
+                fontFamily="'Verdana', 'Tahoma', sans-serif"
+                color="#071c29"
                 isPreviewFocusable={false}
                 onChange={(value) =>
                   setLocalValues({ ...localValues, description: value })
@@ -124,7 +136,9 @@ export const EditEventButton = ({ defaultValues, onSave, onFail, eventId }) => {
               <Editable
                 textAlign="center"
                 defaultValue={localValues.startTime}
-                fontSize="lg"
+                fontSize="1rem"
+                fontFamily="'Verdana', 'Tahoma', sans-serif"
+                color="#071c29"
                 isPreviewFocusable={false}
                 onChange={(value) =>
                   setLocalValues({ ...localValues, startTime: value })
@@ -138,7 +152,9 @@ export const EditEventButton = ({ defaultValues, onSave, onFail, eventId }) => {
               <Editable
                 textAlign="center"
                 defaultValue={localValues.endTime}
-                fontSize="lg"
+                fontSize="1rem"
+                fontFamily="'Verdana', 'Tahoma', sans-serif"
+                color="#071c29"
                 isPreviewFocusable={false}
                 onChange={(value) =>
                   setLocalValues({ ...localValues, endTime: value })
@@ -152,7 +168,7 @@ export const EditEventButton = ({ defaultValues, onSave, onFail, eventId }) => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={handleSave}>
+            <Button colorScheme="teal" mr={3} monClick={handleSave}>
               Save
             </Button>
             <Button variant="ghost" onClick={onClose}>

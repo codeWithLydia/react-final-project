@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { DataContext } from "../context/DataContext";
+import { Select } from "@chakra-ui/react";
 
 export const CategoryFilter = ({ setResults, searchResults, onOpenModal }) => {
   const { data } = useContext(DataContext);
@@ -9,9 +10,6 @@ export const CategoryFilter = ({ setResults, searchResults, onOpenModal }) => {
       Array.isArray(searchResults) && searchResults.length > 0
         ? searchResults
         : data.events;
-
-    console.log("events to filter:", eventsToFilter);
-    console.log("selected category id:", categoryId);
 
     const filteredEvents = eventsToFilter.filter((event) => {
       if (categoryId === "") return true;
@@ -28,15 +26,19 @@ export const CategoryFilter = ({ setResults, searchResults, onOpenModal }) => {
 
   return (
     <>
-      <label>Select Category: </label>
-      <select onChange={(e) => handleCategoryChange(e.target.value)}>
+      <label className="search-label">Select Category: </label>
+      <Select
+        bg="#f0f0f0"
+        size="md"
+        onChange={(e) => handleCategoryChange(e.target.value)}
+      >
         <option value="">All categories</option>
         {data.categories.map((category) => (
           <option key={category.id} value={category.id}>
             {category.name}
           </option>
         ))}
-      </select>
+      </Select>
     </>
   );
 };
