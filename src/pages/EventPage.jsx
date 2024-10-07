@@ -1,13 +1,14 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { DataContext } from "../context/DataContext";
+import { useParams, Link } from "react-router-dom";
+import { DataContext } from "../Context/DataContext";
 import {
+  Box,
+  Button,
+  Flex,
   Heading,
+  Stack,
   Text,
   Image,
-  Flex,
-  Box,
-  Stack,
   Alert,
   AlertIcon,
   CloseButton,
@@ -18,10 +19,20 @@ import { EditEventButton } from "../components/ui/EditEventButton";
 export const EventPage = () => {
   const { eventId } = useParams();
   const { data, loading, error } = useContext(DataContext);
-  const navigate = useNavigate();
 
   const [showSuccess, setShowSuccess] = useState(false);
   const [showFail, setShowFail] = useState(false);
+  const [event, setEvent] = useState(null);
+
+  useEffect(() => {
+    if (loading) return;
+    if (error) return;
+
+    const foundEvent = data.events.find(
+      (event) => event.id === parseInt(eventId)
+    );
+    setEvent(foundEvent);
+  }, [loading, error, data, eventId]);
 
   useEffect(() => {
     if (showSuccess) {
@@ -43,9 +54,6 @@ export const EventPage = () => {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>There seems to be a problem</p>;
-
-  const event = data.events.find((event) => event.id === parseInt(eventId));
-
   if (!event) return <p>Event not found</p>;
 
   const eventCategories = event.categoryIds.map((categoryId) => {
@@ -57,12 +65,13 @@ export const EventPage = () => {
 
   const createdByUser = data.users.find((user) => user.id === event.createdBy);
 
-  const handleEventDeleted = () => {
-    navigate("/eventsPage");
-  };
-
   const handleSave = (newValues) => {
     console.log("Event details updated:", newValues);
+    setEvent((prevEvent) => ({
+      // update the event in the local state
+      ...prevEvent,
+      ...newValues, //merge with new values
+    }));
     setShowSuccess(true);
   };
 
@@ -72,15 +81,18 @@ export const EventPage = () => {
 
   return (
     <Box className="event-page">
-      <Flex
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-        height="100%"
-      >
-        {/* Succes Alert*/}
+      <Flex className="event-details">
+        {/* succes message after successfully editing event*/}
         {showSuccess && (
-          <Alert status="success" variant="solid" width="auto" mb={4}>
+          <Alert
+            status="success"
+            variant="solid"
+            width="auto"
+            mt={4}
+            mb={4}
+            padding="0.25rem"
+            borderRadius="0.5rem"
+          >
             <AlertIcon />
             The event has been succesfully updated!
             <CloseButton
@@ -92,9 +104,17 @@ export const EventPage = () => {
           </Alert>
         )}
 
-        {/* Fail message*/}
+        {/* Fail message when editing event has failed*/}
         {showFail && (
-          <Alert status="error" variant="solid" width="auto" mb={4}>
+          <Alert
+            status="error"
+            variant="solid"
+            width="auto"
+            mt={4}
+            mb={4}
+            padding="0.25rem"
+            borderRadius="0.5rem"
+          >
             <AlertIcon />
             Failed to update the event. Please check and try again
             <CloseButton
@@ -105,37 +125,25 @@ export const EventPage = () => {
             />
           </Alert>
         )}
+
         <Stack
           direction={{ base: "column", md: "row" }}
           flex-wrap="wrap"
-          mt="1rem"
-          spacing="5rem"
+          m="1rem"
+          spacing={{ base: "2rem", md: "3rem" }}
           alignItems="center"
           justifyContent="center"
         >
-          <Box
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-            textAlign="center"
-          >
-            <Heading
-              fontFamily="'Verdana', 'Tahoma', sans-serif"
-              color="#071c29"
-              fontWeight="200"
-              fontSize="2rem"
-              margin="0.5rem"
+          <Box className="event-details-box1">
+            <Button
+              size={{ base: "md", md: "lg" }}
+              colorScheme="teal"
+              marginBottom="1rem"
             >
-              {event.title}
-            </Heading>
-            <Text
-              fontFamily="'Verdana', 'Tahoma', sans-serif"
-              color="#071c29"
-              fontWeight="200"
-              fontSize="1rem"
-              margin="0.5rem"
-            >
+              <Link to="/eventspage">Back to overview</Link>
+            </Button>
+            <Heading className="h3-text">{event.title}</Heading>
+            <Text className="page-text">
               Categories:{" "}
               {eventCategories.map((category, index) => (
                 <span key={index}>
@@ -151,93 +159,68 @@ export const EventPage = () => {
               src={event.image}
               alt={event.title}
             />
-
-            <Flex>
-              <Text
-                fontFamily="'Verdana', 'Tahoma', sans-serif"
-                color="#071c29"
-                fontWeight="200"
-                fontSize="1rem"
-                mx="0.5rem"
-              >
-                Start Time: {new Date(event.startTime).toLocaleString()}
+            <Flex className="time-box">
+              <Text className="page-text">
+                Start Time:{" "}
+                {new Date(event.startTime).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
               </Text>
-              <Text
-                fontFamily="'Verdana', 'Tahoma', sans-serif"
-                color="#071c29"
-                fontWeight="200"
-                fontSize="1rem"
-                mx="0.5rem"
-              >
-                End Time: {new Date(event.endTime).toLocaleString()}
+              <Text className="page-text">
+                End Time:{" "}
+                {new Date(event.endTime).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
               </Text>
             </Flex>
           </Box>
-          <Box
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-            textAlign="center"
-          >
-            <Text
-              fontFamily="'Verdana', 'Tahoma', sans-serif"
-              color="#071c29"
-              fontWeight="200"
-              fontSize="1.5rem"
-              margin="0.5rem"
-            >
-              Description
-            </Text>
-            <Text
-              fontFamily="'Verdana', 'Tahoma', sans-serif"
-              color="#071c29"
-              fontWeight="200"
-              fontSize="1rem"
-              margin="0.5rem"
-            >
-              {event.description}
-            </Text>
-            <Flex flexDir="row" alignItems="center">
-              <Image
-                src={
-                  createdByUser
-                    ? createdByUser.image
-                    : "http://via.placeholder.com/50"
-                }
-                alt={createdByUser ? createdByUser.name : "Unknown"}
-                boxSize="50px"
-                borderRadius="full"
-                margin="0.5rem"
-              />
-              <Text
-                fontFamily="'Verdana', 'Tahoma', sans-serif"
-                color="#071c29"
-                fontWeight="200"
-                fontSize="0.75rem"
-                margin="0.5rem"
-              >
-                Created By: {createdByUser ? createdByUser.name : "Unknown"}
-              </Text>
-            </Flex>
 
-            <Flex flexDir="row" alignItems="center">
-              <EditEventButton
-                defaultValues={{
-                  title: event.title,
-                  description: event.description,
-                  startTime: new Date(event.startTime)
-                    .toISOString()
-                    .slice(0, 16),
-                  endTime: new Date(event.endTime).toISOString().slice(0, 16),
-                }}
-                eventId={event.id}
-                onSave={handleSave}
-                onFail={handleFail}
-              />
+          <Box className="event-deatils-box2">
+            <Stack spacing={{ base: "0.5rem", md: "1rem" }}>
+              <Text className="h4-text">Desription</Text>
+              <Text className="page-text">{event.description}</Text>
+              <Flex flexDir="row" alignItems="center">
+                <Image
+                  src={
+                    createdByUser
+                      ? createdByUser.image
+                      : "http://via.placeholder.com/50"
+                  }
+                  alt={createdByUser ? createdByUser.name : "Unknown"}
+                  boxSize="50px"
+                  borderRadius="full"
+                  margin="0.5rem"
+                />
+                <Text className="page-text">
+                  Created By: {createdByUser ? createdByUser.name : "Unknown"}
+                </Text>
+              </Flex>
 
-              <DeleteButton eventId={event.id} onDelete={handleEventDeleted} />
-            </Flex>
+              <Flex flexDir="row" alignItems="center">
+                <EditEventButton
+                  defaultValues={{
+                    createdBy: event.createdBy,
+                    title: event.title,
+                    image: event.image,
+                    categoryIds: event.categoryIds || [],
+                    description: event.description,
+                    location: event.location,
+                    startTime: new Date(event.startTime)
+                      .toISOString()
+                      .slice(0, 16),
+                    endTime: new Date(event.endTime).toISOString().slice(0, 16),
+                  }}
+                  eventId={event.id}
+                  categories={data.categories}
+                  onSave={handleSave}
+                  onFail={handleFail}
+                />
+
+                <DeleteButton eventId={event.id} eventName={event.title} />
+              </Flex>
+            </Stack>
           </Box>
         </Stack>
       </Flex>

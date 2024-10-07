@@ -1,12 +1,12 @@
 import React from "react";
-import { Flex, Text, Show } from "@chakra-ui/react";
+import { Flex, Heading, Show } from "@chakra-ui/react";
 import { Navigation } from "./Navigation";
-import { HamburgerNavigation } from "./ui/HamburgerNavigation";
+import { HamburgerNavigation } from "./HamburgerNavigation";
 
 export const Header = () => {
   return (
     <Flex className="header">
-      <Text className="header-text">Jane&apos;s EventList</Text>
+      <Heading className="logo">Jane&apos;s EventList</Heading>
       <Show below="md">
         <HamburgerNavigation />
       </Show>

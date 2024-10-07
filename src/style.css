@@ -21,87 +21,104 @@
   -webkit-text-size-adjust: 100%;
 }
 
-.menu-link {
-  color: var(--primary-color);
-  font-family: var(--main-font);
-  font-size: 1rem;
-}
-
 .header {
-  width: 100%vw;
+  width: 100vw;
   justify-content: space-between;
   background-color: var(--primary-color);
   padding: 1rem;
 }
 
-.header .header-text {
+.header .logo {
   font-family: var(--secondary-font);
   font-size: 2rem;
+  font-weight: 300;
   color: var(--secondary-color);
 }
 
+.nav-list {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+}
+
 .footer {
-  width: 100%vw;
+  width: 100vw;
   background-color: var(--primary-color);
-  color: var(--accent-color);
+  padding: 1rem;
+}
+
+.footer-text {
   font-family: var(--main-font);
-  font-size: 0.75rem;
-  padding: 0.5rem;
+  font-size: 1rem;
+  color: var(--accent-color);
 }
 
 .home-page {
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   width: 100vw;
   height: 100vh;
-  background-color: var(--primary-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #8b9499;
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url(/images/amusement-park.jpg);
   background-position: center;
   background-size: cover;
 }
 
-.home-page .title {
-  font-family: var(--secondary-font);
-  font-size: 2rem;
-  color: var(--accent-color);
+.home-text-box {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.welcome-text {
+.home-text-box .page-title {
+  font-family: var(--secondary-font);
+  font-weight: 400;
+  font-size: 2rem;
+  color: var(--accent-color);
+  text-align: center;
+}
+
+.home-text-box .page-text {
   width: 50%;
   height: auto;
+  font-family: var(--main-font);
+  font-size: 1rem;
+  text-align: center;
+  color: var(--accent-color);
   background-color: var(--primary-color);
   border-radius: 1rem;
   margin-top: 0.5rem;
   padding: 0.5rem;
-  color: var(--accent-color);
-  font-family: var(--main-font);
-  font-size: 1rem;
-  text-align: center;
 }
 
 .contact-page {
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   width: 100vw;
   height: 100vh;
-  background-color: var(--primary-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #8b9499;
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url(/images/carousel.jpg);
   background-position: center;
   background-size: cover;
 }
 
-.contact-page .title {
-  text-align: center;
+.contact-text-box {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.contact-text-box .page-title {
   font-family: var(--secondary-font);
-  font-size: 3rem;
+  font-size: 2rem;
   color: var(--accent-color);
 }
 
-.contact-info {
+.contact-list {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
@@ -109,7 +126,7 @@
   height: auto;
   border-radius: 1rem;
   margin-top: 0.5rem;
-  padding: 0.5rem;
+  padding: 1rem;
   background-color: var(--primary-color);
   color: var(--accent-color);
   font-family: var(--main-font);
@@ -118,15 +135,65 @@
 
 .events-page {
   width: 100vw;
-  height: auto;
+  height: 100%;
   background-color: #8b9499;
-  background-image: linear-gradient(to top right, #fff89a, #ffc900);
+  background-image: linear-gradient(to bottom right, #f0f0f0, #fff89a);
 }
 
-.search-label {
+.event-page {
+  width: 100vw;
+  height: 100%;
+  background-color: #8b9499;
+  background-image: linear-gradient(to bottom right, #f0f0f0, #fff89a);
+}
+
+.event-details {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.event-details-box1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.event-details-box2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.event-page .h3-text {
+  font-family: var(--secondary-font);
+  font-size: 2rem;
+  color: var(--primary-color);
+}
+
+.event-page .h4-text {
+  font-family: var(--main-font);
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  text-align: center;
+}
+
+.event-page .page-text {
   font-family: var(--main-font);
   font-size: 1rem;
   color: var(--primary-color);
+  margin: 1rem;
+  text-align: center;
+}
+
+.event-page .time-box {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
 }
 
 .search-modal {
@@ -146,24 +213,89 @@
   list-style-type: none;
 }
 
-.add-event-form {
-  margin: 1rem;
+.search-field {
+  flex-direction: column;
+}
+.search-field .label {
+  font-family: var(--main-font);
+  font-size: 1rem;
+  color: var(--primary-color);
 }
 
-.event-page {
+.category-filter .label {
+  font-family: var(--main-font);
+  font-size: 1rem;
+  color: var(--primary-color);
+}
+
+.add-event-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100vw;
   height: 100vh;
   background-color: #8b9499;
-  background-image: linear-gradient(to top right, #fff89a, #ffc900);
+  background-image: linear-gradient(to bottom right, #f0f0f0, #fff89a);
 }
 
-.nav-list {
-  list-style-type: none;
-  display: flex;
-  flex-direction: row;
+.event-form {
+  margin: 1rem;
 }
 
-.nav-link {
-  font-family: var(--main-font);
-  font-size: 1rem;
+@media (min-width: 48em) {
+  .event-page {
+    height: 100vh;
+  }
+
+  .home-page {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url(/images/hot-air-balloons.jpg);
+  }
+
+  .contact-page {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url(/images/bowling.jpg);
+  }
+
+  .header .logo {
+    font-size: 3rem;
+  }
+
+  .home-text-box .page-title {
+    font-weight: 400;
+    font-size: 4.5rem;
+  }
+
+  .home-text-box .page-text {
+    font-size: 1.125rem;
+  }
+
+  .contact-page .page-title {
+    font-weight: 400;
+    font-size: 4.5rem;
+  }
+
+  .contact-list {
+    font-size: 1.125rem;
+  }
+
+  .event-page .h3-text {
+    font-size: 3rem;
+  }
+
+  .event-page .h4-text {
+    font-size: 2rem;
+  }
+
+  .event-page .page-text {
+    font-size: 1.125rem;
+  }
+
+  .event-details-box2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
 }

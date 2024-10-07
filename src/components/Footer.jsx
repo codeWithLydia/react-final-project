@@ -1,10 +1,10 @@
 import React from "react";
-import { Flex, Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 
 export const Footer = () => {
   return (
-    <Flex className="footer">
-      <Text>©2024 Jane Doe</Text>
-    </Flex>
+    <Box className="footer">
+      <Text className="footer-text">©2024 Jane Doe</Text>
+    </Box>
   );
 };

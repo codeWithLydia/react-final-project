@@ -1,44 +1,44 @@
 import React, { useContext } from "react";
-import { DataContext } from "../context/DataContext";
-import { Select } from "@chakra-ui/react";
+import { DataContext } from "../Context/DataContext";
+import { Box, Select, Tooltip } from "@chakra-ui/react";
 
-export const CategoryFilter = ({ setResults, searchResults, onOpenModal }) => {
+export const CategoryFilter = ({ setResults, id, name }) => {
   const { data } = useContext(DataContext);
 
   const handleCategoryChange = (categoryId) => {
-    const eventsToFilter =
-      Array.isArray(searchResults) && searchResults.length > 0
-        ? searchResults
-        : data.events;
+    const eventsToFilter = data.events;
 
     const filteredEvents = eventsToFilter.filter((event) => {
-      if (categoryId === "") return true;
+      if (categoryId === "") return true; //show all events when no category is selected
       return event.categoryIds.includes(parseInt(categoryId));
     });
 
-    console.log("filtered events:", filteredEvents);
-    setResults(filteredEvents);
-
-    if (filteredEvents.length > 0) {
-      onOpenModal();
-    }
+    setResults(filteredEvents); // updates the results in parentcomponent
   };
 
   return (
-    <>
-      <label className="search-label">Select Category: </label>
-      <Select
-        bg="#f0f0f0"
-        size="md"
-        onChange={(e) => handleCategoryChange(e.target.value)}
-      >
-        <option value="">All categories</option>
-        {data.categories.map((category) => (
-          <option key={category.id} value={category.id}>
-            {category.name}
-          </option>
-        ))}
-      </Select>
-    </>
+    <Box className="category-filter">
+      <label htmlFor={id} className="label">
+        Select category
+      </label>
+      <Tooltip label="Filter by category" placement="bottom">
+        <span>
+          <Select
+            bg="#8b9499"
+            size="md"
+            id={id}
+            name={name}
+            onChange={(e) => handleCategoryChange(e.target.value)}
+          >
+            <option value="">All categories</option>
+            {data.categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </Select>
+        </span>
+      </Tooltip>
+    </Box>
   );
 };

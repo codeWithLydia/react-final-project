@@ -1,15 +1,15 @@
+import { ChakraProvider } from "@chakra-ui/react";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./style.css";
-import { ChakraProvider } from "@chakra-ui/react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { DataProvider } from "./context/DataContext";
-import { Home } from "./pages/Home";
 import { EventPage } from "./pages/EventPage";
 import { EventsPage } from "./pages/EventsPage";
-import { Contact } from "./pages/Contact";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Root } from "./components/Root";
+import { ContactPage } from "./pages/ContactPage";
+import { HomePage } from "./pages/HomePage";
 import { EventSubmitForm } from "./pages/EventSubmitForm";
+import { DataProvider } from "./Context/DataContext";
 
 const router = createBrowserRouter([
   {
@@ -18,22 +18,20 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: <HomePage />,
+        // loader: postListLoader, Used DataContext instead
       },
       {
         path: "/eventsPage",
         element: <EventsPage />,
-        // loader: postListLoader,
       },
       {
         path: "/event/:eventId",
         element: <EventPage />,
-        // loader: postLoader,
-        // action: addComment,
       },
       {
         path: "/contact",
-        element: <Contact />,
+        element: <ContactPage />,
       },
       {
         path: "/submitform",

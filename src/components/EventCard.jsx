@@ -1,23 +1,25 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Card,
-  CardHeader,
   CardBody,
-  Stack,
+  CardHeader,
   Heading,
   Text,
   Image,
+  Stack,
   Flex,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
 
 export const EventCard = ({ event, categories }) => {
   const navigate = useNavigate();
 
+  /* filters categories array and checks if the categoryIds array contains the category.id so you get the right categories with the event */
   const eventCategories = categories.filter((category) =>
     event.categoryIds.includes(category.id)
   );
 
+  /* when you click the card, you go to the event based on the event id */
   const handleCardClick = () => {
     navigate(`/event/${event.id}`);
   };
@@ -26,11 +28,13 @@ export const EventCard = ({ event, categories }) => {
     <Card
       onClick={handleCardClick}
       bg="#071c29"
-      width="500px"
+      width={{ base: "90%", md: "500px" }}
       height="auto"
       borderRadius="1rem"
       variant="elevated"
       margin="1rem"
+      transition="transform 0.2s ease-in-out"
+      _hover={{ transform: "scale(1.05)", cursor: "pointer" }}
     >
       <CardHeader>
         <Heading
@@ -64,14 +68,19 @@ export const EventCard = ({ event, categories }) => {
           bgColor="gray.600"
         />
         <Stack mt="3" spacing="3">
-          <Flex>
+          <Flex justifyContent="flex-start" alignItems="center">
             <Text
               fontFamily="'Verdana', 'Tahoma', sans-serif"
               color="#f0f0f0"
               fontWeight="200"
               fontSize="1rem"
+              marginRight="1rem"
             >
-              StartTime: {new Date(event.startTime).toLocaleString()}
+              StartTime:
+              {new Date(event.startTime).toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
             </Text>
             <Text
               fontFamily="'Verdana', 'Tahoma', sans-serif"
@@ -79,7 +88,11 @@ export const EventCard = ({ event, categories }) => {
               fontWeight="200"
               fontSize="1rem"
             >
-              EndTime: {new Date(event.endTime).toLocaleString()}
+              EndTime:{" "}
+              {new Date(event.endTime).toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
             </Text>
           </Flex>
           <Text
@@ -88,7 +101,7 @@ export const EventCard = ({ event, categories }) => {
             fontWeight="200"
             fontSize="1.5rem"
           >
-            Desription
+            Description
           </Text>
           <Text
             fontFamily="'Verdana', 'Tahoma', sans-serif"
