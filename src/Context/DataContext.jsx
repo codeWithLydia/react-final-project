@@ -7,6 +7,7 @@ export const DataProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Fetches the initial data for events, users and categories
   const fetchData = async () => {
     setLoading(true);
     try {
@@ -28,14 +29,14 @@ export const DataProvider = ({ children }) => {
 
       setData({ events, users, categories });
     } catch (err) {
-      console.log("error occured:", err);
+      console.log("error occurred:", err);
       setError(err);
     } finally {
       setLoading(false);
     }
   };
 
-  //handle delete event action in eventpage
+  //Handle delete event action in the eventpage
   const deleteEvent = (eventId) => {
     setData((prevData) => ({
       ...prevData,
@@ -43,11 +44,21 @@ export const DataProvider = ({ children }) => {
     }));
   };
 
-  //handle event add action in eventsubmitform
+  //Handle add event action in the eventsubmitform
   const addEvent = (newEvent) => {
     setData((prevData) => ({
       ...prevData,
       events: [...prevData.events, newEvent],
+    }));
+  };
+
+  //Handle edit event action in eventpage
+  const updateEvent = (eventId, updatedEvent) => {
+    setData((prevData) => ({
+      ...prevData,
+      events: prevData.events.map((event) =>
+        event.id === updatedEvent.id ? updatedEvent : event
+      ),
     }));
   };
 
@@ -57,7 +68,7 @@ export const DataProvider = ({ children }) => {
 
   return (
     <DataContext.Provider
-      value={{ data, loading, error, deleteEvent, addEvent }}
+      value={{ data, loading, error, deleteEvent, addEvent, updateEvent }}
     >
       {children}
     </DataContext.Provider>

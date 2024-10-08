@@ -8,35 +8,41 @@ export const Navigation = () => {
       <ul className="nav-list">
         <Tooltip label="Home">
           <li>
-            <Button
-              size={{ base: "md", md: "lg" }}
-              bgColor="#fff89a"
-              margin="0.5rem"
-            >
-              <Link to="/">Home</Link>
-            </Button>
+            <Link to="/">
+              <Button
+                size={{ base: "md", md: "lg" }}
+                bgColor="#fff89a"
+                margin="0.5rem"
+              >
+                Home
+              </Button>
+            </Link>
           </li>
         </Tooltip>
         <Tooltip label="Eventspage">
           <li>
-            <Button
-              size={{ base: "md", md: "lg" }}
-              bgColor="#fff89a"
-              margin="0.5rem"
-            >
-              <Link to="/eventspage">Events</Link>
-            </Button>
+            <Link to="/eventsPage">
+              <Button
+                size={{ base: "md", md: "lg" }}
+                bgColor="#fff89a"
+                margin="0.5rem"
+              >
+                Events
+              </Button>
+            </Link>
           </li>
         </Tooltip>
         <Tooltip label="Contact us">
           <li>
-            <Button
-              size={{ base: "md", md: "lg" }}
-              bgColor="#fff89a"
-              margin="0.5rem"
-            >
-              <Link to="/contact">Contact us</Link>
-            </Button>
+            <Link to="/contact">
+              <Button
+                size={{ base: "md", md: "lg" }}
+                bgColor="#fff89a"
+                margin="0.5rem"
+              >
+                Contact
+              </Button>
+            </Link>
           </li>
         </Tooltip>
       </ul>

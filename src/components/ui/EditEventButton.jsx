@@ -37,6 +37,7 @@ export const EditEventButton = ({
     createdBy: defaultValues.createdBy,
   });
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const hoverBackground = useColorModeValue("gray.300", "gray.700");
 
   const handleCheckboxChange = (categoryId) => {
     const isSelected = localValues.categoryIds.includes(categoryId);
@@ -61,7 +62,7 @@ export const EditEventButton = ({
       createdBy: localValues.createdBy,
     };
 
-    console.log("ending PUT request to update event: ", eventId);
+    console.log("sending PUT request to update event: ", eventId);
     try {
       const response = await fetch(`http://localhost:3000/events/${eventId}`, {
         method: "PUT",
@@ -78,7 +79,7 @@ export const EditEventButton = ({
       }
 
       onSave(updatedEvent);
-      console.log("Event has been succesfully updated");
+      console.log("Event has been successfully updated");
       onClose();
     } catch (error) {
       console.error("Something went wrong:", error);
@@ -122,7 +123,7 @@ export const EditEventButton = ({
         <ModalOverlay />
         <ModalContent>
           <ModalHeader color="#071c29">Edit Event</ModalHeader>
-          <Tooltip label="close window">
+          <Tooltip label="Close window">
             <ModalCloseButton />
           </Tooltip>
           <ModalBody>
@@ -143,7 +144,7 @@ export const EditEventButton = ({
                     placement="right"
                   >
                     <EditablePreview
-                      _hover={{ background: useColorModeValue("gray.300") }}
+                      _hover={{ background: hoverBackground }}
                       wordBreak="break-word"
                       border="1px"
                       borderStyle="solid"
@@ -259,7 +260,7 @@ export const EditEventButton = ({
                   }
                 >
                   <Tooltip
-                    label="Edit startTime"
+                    label="Edit starttime"
                     shouldWrapChildren={true}
                     placement="right"
                   >
@@ -286,7 +287,7 @@ export const EditEventButton = ({
                   }
                 >
                   <Tooltip
-                    label="Edit endTime"
+                    label="Edit endtime"
                     shouldWrapChildren={true}
                     placement="right"
                   >

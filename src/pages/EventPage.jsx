@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import { DataContext } from "../Context/DataContext";
 import {
   Box,
@@ -18,12 +18,26 @@ import { EditEventButton } from "../components/ui/EditEventButton";
 
 export const EventPage = () => {
   const { eventId } = useParams();
-  const { data, loading, error } = useContext(DataContext);
+  const location = useLocation();
+  const { data, loading, error, updateEvent } = useContext(DataContext);
 
-  const [showSuccess, setShowSuccess] = useState(false);
-  const [showFail, setShowFail] = useState(false);
+  const [showSuccessEdit, setShowSuccessEdit] = useState(false);
+  const [showFailEdit, setShowFailEdit] = useState(false);
+  const [showSuccessSubmit, setShowSuccessSubmit] = useState(false);
   const [event, setEvent] = useState(null);
 
+  //Check to see if there is a message in the navigation state
+  useEffect(() => {
+    if (location.state?.successMessage) {
+      setShowSuccessSubmit(true); //show alert when there is a message
+      const timer = setTimeout(() => {
+        setShowSuccessSubmit(false); // hide alert after 5 sec
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [location.state]);
+
+  //As soon as the data is loaded and there are no errors, it retreives the data using the specific event id
   useEffect(() => {
     if (loading) return;
     if (error) return;
@@ -34,56 +48,64 @@ export const EventPage = () => {
     setEvent(foundEvent);
   }, [loading, error, data, eventId]);
 
+  //Controls the succesEdit message
   useEffect(() => {
-    if (showSuccess) {
+    if (showSuccessEdit) {
       const timer = setTimeout(() => {
-        setShowSuccess(false);
+        setShowSuccessEdit(false);
       }, 5000);
       return () => clearTimeout(timer);
     }
-  }, [showSuccess]);
+  }, [showSuccessEdit]);
 
+  //Controls the failEdit message
   useEffect(() => {
-    if (showFail) {
+    if (showFailEdit) {
       const timer = setTimeout(() => {
-        setShowFail("");
+        setShowFailEdit("");
       }, 5000);
       return () => clearTimeout(timer);
     }
-  }, [showFail]);
+  }, [showFailEdit]);
 
+  //Messages for still loading, error and missing data
   if (loading) return <p>Loading...</p>;
   if (error) return <p>There seems to be a problem</p>;
   if (!event) return <p>Event not found</p>;
 
+  // Retreives the categories from events
   const eventCategories = event.categoryIds.map((categoryId) => {
     const category = data.categories.find(
       (category) => category.id === categoryId
     );
-    return category ? category.name : "Unkown category";
+    return category ? category.name : "Unknown category";
   });
 
+  // Retreives the user that created the event
   const createdByUser = data.users.find((user) => user.id === event.createdBy);
 
+  //Update the event using the updatEvent function from DataContext
   const handleSave = (newValues) => {
     console.log("Event details updated:", newValues);
+    // update the event in the local state
+    updateEvent(event.id, { ...event, ...newValues });
     setEvent((prevEvent) => ({
-      // update the event in the local state
       ...prevEvent,
       ...newValues, //merge with new values
     }));
-    setShowSuccess(true);
+    setShowSuccessEdit(true);
   };
 
+  // Gets called when the event update failed
   const handleFail = () => {
-    setShowFail(true);
+    setShowFailEdit(true);
   };
 
   return (
     <Box className="event-page">
       <Flex className="event-details">
         {/* succes message after successfully editing event*/}
-        {showSuccess && (
+        {showSuccessEdit && (
           <Alert
             status="success"
             variant="solid"
@@ -94,18 +116,18 @@ export const EventPage = () => {
             borderRadius="0.5rem"
           >
             <AlertIcon />
-            The event has been succesfully updated!
+            The event has been successfully updated!
             <CloseButton
               position="relative"
-              rigth={-1}
+              right={-1}
               top={-1}
-              onClick={() => setShowSuccess(false)}
+              onClick={() => setShowSuccessEdit(false)}
             />
           </Alert>
         )}
 
         {/* Fail message when editing event has failed*/}
-        {showFail && (
+        {showFailEdit && (
           <Alert
             status="error"
             variant="solid"
@@ -116,12 +138,34 @@ export const EventPage = () => {
             borderRadius="0.5rem"
           >
             <AlertIcon />
-            Failed to update the event. Please check and try again
+            There was a problem updating the event. Please check and try again
             <CloseButton
-              positin="relative"
-              rigth={-1}
+              position="relative"
+              right={-1}
               top={-1}
-              onClick={() => setShowFail(false)}
+              onClick={() => setShowFailEdit(false)}
+            />
+          </Alert>
+        )}
+
+        {/* success alert after adding event*/}
+        {showSuccessSubmit && (
+          <Alert
+            status="success"
+            variant="solid"
+            width="auto"
+            mt={4}
+            mb={4}
+            padding="0.25rem"
+            borderRadius="0.5rem"
+          >
+            <AlertIcon />
+            {location.state.successMessage}
+            <CloseButton
+              position="relative"
+              right={-1}
+              top={-1}
+              onClick={() => setShowSuccessSubmit(false)}
             />
           </Alert>
         )}
@@ -135,13 +179,16 @@ export const EventPage = () => {
           justifyContent="center"
         >
           <Box className="event-details-box1">
-            <Button
-              size={{ base: "md", md: "lg" }}
-              colorScheme="teal"
-              marginBottom="1rem"
-            >
-              <Link to="/eventspage">Back to overview</Link>
-            </Button>
+            <Link to="/eventsPage">
+              <Button
+                size={{ base: "md", md: "lg" }}
+                colorScheme="teal"
+                marginBottom="1rem"
+              >
+                Back to overview
+              </Button>
+            </Link>
+
             <Heading className="h3-text">{event.title}</Heading>
             <Text className="page-text">
               Categories:{" "}
@@ -177,9 +224,9 @@ export const EventPage = () => {
             </Flex>
           </Box>
 
-          <Box className="event-deatils-box2">
+          <Box className="event-details-box2">
             <Stack spacing={{ base: "0.5rem", md: "1rem" }}>
-              <Text className="h4-text">Desription</Text>
+              <Text className="h4-text">Description</Text>
               <Text className="page-text">{event.description}</Text>
               <Flex flexDir="row" alignItems="center">
                 <Image

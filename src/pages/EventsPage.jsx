@@ -19,17 +19,17 @@ import { CategoryFilter } from "../components/CategoryFilter";
 export const EventsPage = ({ setEvent, clickFn }) => {
   const { data } = useContext(DataContext);
   const [selectedEventList, setSelectedEventList] = useState(data.events);
-  const location = useLocation(); //get location
+  const location = useLocation(); //Get location
   const [showSuccess, setShowSuccess] = useState(false);
 
-  //check to see if there is a message in the navigationstate
+  //Check to see if there is a message in the navigationstate
   useEffect(() => {
     if (location.state?.message) {
-      setShowSuccess(true); //show alert when there is a message
+      setShowSuccess(true); //Show alert when there is a message
       const timer = setTimeout(() => {
-        setShowSuccess(false); // hide alert after 5 sec
+        setShowSuccess(false); // Hide alert after 5 sec
       }, 5000);
-      return () => clearTimeout(timer);
+      return () => clearTimeout(timer); // Clears timer
     }
   }, [location.state]);
 
@@ -50,9 +50,11 @@ export const EventsPage = ({ setEvent, clickFn }) => {
           />
         </Stack>
         <Tooltip label="Add event" placement="right">
-          <Button size={{ base: "md", md: "lg" }} colorScheme="teal">
-            <Link to="/submitform">Add event</Link>
-          </Button>
+          <Link to="/submitform">
+            <Button size={{ base: "md", md: "lg" }} colorScheme="teal">
+              Add event
+            </Button>
+          </Link>
         </Tooltip>
       </Flex>
 
@@ -70,7 +72,7 @@ export const EventsPage = ({ setEvent, clickFn }) => {
           <AlertIcon />
           {location.state.message}
           <CloseButton
-            position="absolute"
+            position="relative"
             right={-1}
             top={-1}
             onClick={() => setShowSuccess(false)}

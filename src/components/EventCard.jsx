@@ -14,12 +14,12 @@ import {
 export const EventCard = ({ event, categories }) => {
   const navigate = useNavigate();
 
-  /* filters categories array and checks if the categoryIds array contains the category.id so you get the right categories with the event */
+  /* Filters categories array and checks if the categoryIds array contains the category.id so you get the right categories with the event */
   const eventCategories = categories.filter((category) =>
     event.categoryIds.includes(category.id)
   );
 
-  /* when you click the card, you go to the event based on the event id */
+  /* When you click the card, you go to the event based on the event id */
   const handleCardClick = () => {
     navigate(`/event/${event.id}`);
   };
@@ -76,7 +76,7 @@ export const EventCard = ({ event, categories }) => {
               fontSize="1rem"
               marginRight="1rem"
             >
-              StartTime:
+              Start Time:
               {new Date(event.startTime).toLocaleTimeString([], {
                 hour: "2-digit",
                 minute: "2-digit",
@@ -88,7 +88,7 @@ export const EventCard = ({ event, categories }) => {
               fontWeight="200"
               fontSize="1rem"
             >
-              EndTime:{" "}
+              End Time:{" "}
               {new Date(event.endTime).toLocaleTimeString([], {
                 hour: "2-digit",
                 minute: "2-digit",

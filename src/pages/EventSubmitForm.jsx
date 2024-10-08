@@ -1,6 +1,5 @@
 import {
   Box,
-  CloseButton,
   Stack,
   Input,
   Checkbox,
@@ -9,8 +8,9 @@ import {
   AlertIcon,
   Tooltip,
 } from "@chakra-ui/react";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { DataContext } from "../Context/DataContext";
+import { useNavigate } from "react-router-dom";
 
 export const EventSubmitForm = () => {
   const initialFormData = {
@@ -26,9 +26,10 @@ export const EventSubmitForm = () => {
 
   const [formData, setFormData] = useState(initialFormData);
   const [isLoading, setIsLoading] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
+
   const [errorMessage, setErrorMessage] = useState("");
   const { addEvent } = useContext(DataContext);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -82,58 +83,25 @@ export const EventSubmitForm = () => {
       const newEvent = await response.json(); //get new event from server
       addEvent(newEvent); //add event to context
       setFormData(initialFormData);
-      setShowSuccess(true);
+
+      //navigate to eventpage of the new event
+      navigate(`/event/${newEvent.id}`, {
+        state: {
+          successMessage: "Event has been successfully added to the list",
+        },
+      });
     } catch (error) {
       console.error("Error submitting event:", error);
+      setErrorMessage(error.message);
     } finally {
       setIsLoading(false);
     }
   };
 
-  useEffect(() => {
-    if (showSuccess) {
-      const timer = setTimeout(() => {
-        setShowSuccess(false);
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [showSuccess]);
-
-  useEffect(() => {
-    if (errorMessage) {
-      const timer = setTimeout(() => {
-        setErrorMessage("");
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [errorMessage]);
-
   return (
     <Box className="add-event-page">
       <form onSubmit={handleSubmit} className="event-form">
         <Stack spacing={{ base: "1rem", md: "1.5rem" }}>
-          {/* succes alert */}
-          {showSuccess && (
-            <Alert
-              status="success"
-              variant="solid"
-              width="auto"
-              mt={4}
-              mb={4}
-              padding="0.25rem"
-              borderRadius="0.5rem"
-            >
-              <AlertIcon />
-              Event has been succesfully added to the eventlist!
-              <CloseButton
-                position="absolute"
-                right={-1}
-                top={-1}
-                onClick={() => setShowSuccess(false)}
-              />
-            </Alert>
-          )}
-
           {/* error alert */}
           {errorMessage && (
             <Alert
@@ -216,7 +184,7 @@ export const EventSubmitForm = () => {
           <Tooltip label="Event description" placement="bottom">
             <Input
               id="description"
-              placeholder="Desription Event"
+              placeholder="Description Event"
               name="description"
               value={formData.description}
               onChange={handleChange}

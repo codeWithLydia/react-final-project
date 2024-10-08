@@ -7,8 +7,8 @@ export const EventSearch = ({ setResults }) => {
   const { data } = useContext(DataContext);
   const [searchField, setSearchField] = useState("");
 
-  const handleChange = (event) => {
-    const value = event.target.value;
+  const handleChange = (e) => {
+    const value = e.target.value;
     setSearchField(value);
 
     if (!data.events || data.events.length === 0) {
@@ -16,7 +16,7 @@ export const EventSearch = ({ setResults }) => {
       return;
     }
 
-    /* filters events by title, compares searchfieldinput with data */
+    /* Filters events by title, compares the search field input with data */
     const matchedEvents = data.events.filter(({ title }) => {
       return title.toLowerCase().includes(event.target.value.toLowerCase());
     });
@@ -24,7 +24,7 @@ export const EventSearch = ({ setResults }) => {
     setResults(matchedEvents);
   };
 
-  //closes search results when searchfield gets cleared by user
+  //Closes search results when searchfield gets cleared by user
   useEffect(() => {
     if (searchField === "") {
       setResults(data.events); //reset to all events when searchfield is cleared

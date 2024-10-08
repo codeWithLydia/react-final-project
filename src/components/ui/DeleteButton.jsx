@@ -34,7 +34,7 @@ export const DeleteButton = ({ eventId, eventName }) => {
 
       deleteEvent(eventId);
 
-      //navigate with state to pass successmessage to EventsPage
+      //navigate to the EventsPage and pass a successmessage as state
       navigate("/eventsPage", {
         state: { message: "Event has been successfully deleted" },
       });
